@@ -16,6 +16,16 @@ func contactHandler(w http.ResponseWriter, r *http.Request) {
 		"<a href=\"mailto:bekanur98@gmail.com\">bekanur98@gmail.com</a></p>")
 }
 
+func faqHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/html; charset=utf8")
+	fmt.Fprint(w, `<h1>FAQ Page</h1>
+<ul>
+	<li>Is there a free version?</li>
+	<li>Yes there is!</li>
+</ul>
+`)
+}
+
 //func pathHandler(w http.ResponseWriter, r *http.Request) {
 //	switch r.URL.Path {
 //	case "/":
@@ -35,6 +45,8 @@ func (router Router) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		homeHandler(w, r)
 	case "/contact":
 		contactHandler(w, r)
+	case "/faq":
+		faqHandler(w, r)
 	default:
 		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
 	}
