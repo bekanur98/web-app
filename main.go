@@ -33,13 +33,7 @@ func contactHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func faqHandler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "text/html; charset=utf8")
-	fmt.Fprint(w, `<h1>FAQ Page</h1>
-<ul>
-	<li>Is there a free version?</li>
-	<li>Yes there is!</li>
-</ul>
-`)
+	executeTemplate(w, "faq.gohtml")
 }
 
 func main() {
