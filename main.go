@@ -8,9 +8,9 @@ import (
 	"net/http"
 )
 
-func homeHandler(w http.ResponseWriter, r *http.Request) {
+func executeTemplate(w http.ResponseWriter, filePath string) {
 	w.Header().Set("Content-Type", "text/html; charset=utf8")
-	tpl, err := template.ParseFiles("templates/home.gohtml")
+	tpl, err := template.ParseFiles("templates/" + filePath)
 	if err != nil {
 		log.Printf("parsing template: %v", err)
 		http.Error(w, "There was an error parsing the template", http.StatusInternalServerError)
@@ -24,10 +24,12 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func homeHandler(w http.ResponseWriter, r *http.Request) {
+	executeTemplate(w, "home.gohtml")
+}
+
 func contactHandler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "text/html; charset=utf8")
-	fmt.Fprint(w, "<h1>Contact page</h1><p>To get in touch, email me at "+
-		"<a href=\"mailto:bekanur98@gmail.com\">bekanur98@gmail.com</a></p>")
+	executeTemplate(w, "contact.gohtml")
 }
 
 func faqHandler(w http.ResponseWriter, r *http.Request) {
