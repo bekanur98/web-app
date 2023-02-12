@@ -2,38 +2,36 @@ package main
 
 import (
 	"fmt"
+	"github.com/bekanur98/web-app/views"
 	"github.com/go-chi/chi/v5"
-	"html/template"
 	"log"
 	"net/http"
+	"path/filepath"
 )
 
-func executeTemplate(w http.ResponseWriter, filePath string) {
-	w.Header().Set("Content-Type", "text/html; charset=utf8")
-	tpl, err := template.ParseFiles("templates/" + filePath)
+func executeTemplate(w http.ResponseWriter, filepath string) {
+	t, err := views.Parse(filepath)
 	if err != nil {
 		log.Printf("parsing template: %v", err)
 		http.Error(w, "There was an error parsing the template", http.StatusInternalServerError)
 		return
 	}
-	err = tpl.Execute(w, nil)
-	if err != nil {
-		log.Printf("executing template: %v", err)
-		http.Error(w, "There was an error execute the template", http.StatusInternalServerError)
-		return
-	}
+	t.Execute(w, nil)
 }
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
-	executeTemplate(w, "home.gohtml")
+	tplPath := filepath.Join("templates", "home.gohtml")
+	executeTemplate(w, tplPath)
 }
 
 func contactHandler(w http.ResponseWriter, r *http.Request) {
-	executeTemplate(w, "contact.gohtml")
+	tplPath := filepath.Join("templates", "contact.gohtml")
+	executeTemplate(w, tplPath)
 }
 
 func faqHandler(w http.ResponseWriter, r *http.Request) {
-	executeTemplate(w, "faq.gohtml")
+	tplPath := filepath.Join("templates", "faq.gohtml")
+	executeTemplate(w, tplPath)
 }
 
 func main() {
